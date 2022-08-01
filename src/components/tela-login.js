@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import {
-    Platform,
     StyleSheet,
     View,
     Text,
     TextInput,
-    Button,
+    TouchableHighlight,
 } from 'react-native';
+import Botao from './botao';
+import { connect } from 'react-redux';
+import { State } from 'react-native-gesture-handler';
 
 class TelaLogin extends Component {
     constructor(props) {
         super(props);
     }
 
-    acessar() {
+    irParaCadastro(navigation) {
+        navigation.navigate('Cadastro');
+    }
 
+    acessar() {
+        
     }
 
     render() {
@@ -24,18 +30,17 @@ class TelaLogin extends Component {
                     <Text style={styles.textoTitulo}>Whatsapp Clone</Text>
                 </View>
                 <View style={styles.painelLogin}>
-                    <TextInput style={styles.textoLogin} placeholder='E-mail'></TextInput>
-                    <TextInput style={styles.textoLogin} placeholder='Senha'></TextInput>
-                    <Text style={styles.textoLink}>Ainda não tem cadastro? Cadastre-se</Text>
+                    <TextInput value={this.props.email} style={styles.textoLogin} placeholder='E-mail'></TextInput>
+                    <TextInput value={this.props.senha} style={styles.textoLogin} placeholder='Senha'></TextInput>
+                    <TouchableHighlight 
+                        underlayColor={'white'}
+                        activeOpacity={0.5}
+                        onPress={() => this.irParaCadastro(this.props.navigation)}>
+                        <Text style={styles.textoLink}>Ainda não tem cadastro? Cadastre-se</Text>
+                    </TouchableHighlight>
                 </View>
                 <View style={styles.painelAcessar}>
-                    {
-                        Platform.OS === 'ios'
-                        ? <View style={styles.botaoIos}>
-                            <Button color='#FFF' title='Acessar' onPress={this.acessar.bind(this)}></Button>
-                        </View>
-                        : <Button color='#115e54' title='Acessar' onPress={this.acessar.bind(this)}></Button>
-                    }        
+                    <Botao title='Acessar' onPress={this.acessar.bind(this)}></Botao>
                 </View>
             </View>
         )
@@ -68,11 +73,11 @@ const styles = StyleSheet.create({
     painelAcessar: {
         flex: 1,
     },
-    botaoIos: {
-        backgroundColor: '#115e54',
-        shadowColor: 'grey',
-        shadowOpacity: 0.5,
-    },
 });
 
-export default TelaLogin;
+const mapStateToProps = (state) => ({
+    email: state.default.AutenticacaoReducer.email,
+    senha: state.default.AutenticacaoReducer.senha,
+});
+
+export default connect(mapStateToProps)(TelaLogin);
