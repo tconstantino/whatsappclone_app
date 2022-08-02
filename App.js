@@ -17,7 +17,15 @@ import {
 import { Provider } from 'react-redux';
 import Navigation from './Navigation';
 import store from './src/store';
+import { initializeApp } from "firebase/app";
+import { getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { firebaseConfig } from './config/firebase-config';
 
+const app = initializeApp(firebaseConfig);
+const authentication = getAuth(app);
 
  const App = () => {
    return (

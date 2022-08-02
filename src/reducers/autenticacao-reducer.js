@@ -9,7 +9,6 @@ const initialState = {
 const AutenticacaoReducer = createReducer(initialState, (builder) => {
     builder
         .addCase(modificarEmail, (state, action) => {
-            console.log('modifica email action', action);
             return { ...state, email: action.payload };
         })
         .addCase(modificarSenha, (state, action) => {
