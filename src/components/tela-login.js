@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Botao from './botao';
 import { connect } from 'react-redux';
-import { State } from 'react-native-gesture-handler';
+import { modificarEmail, modificarSenha } from '../actions/autenticacao-action';
 
 class TelaLogin extends Component {
     constructor(props) {
@@ -30,8 +30,16 @@ class TelaLogin extends Component {
                     <Text style={styles.textoTitulo}>Whatsapp Clone</Text>
                 </View>
                 <View style={styles.painelLogin}>
-                    <TextInput value={this.props.email} style={styles.textoLogin} placeholder='E-mail'></TextInput>
-                    <TextInput value={this.props.senha} style={styles.textoLogin} placeholder='Senha'></TextInput>
+                    <TextInput 
+                     value={this.props.email}
+                     style={styles.textoLogin}
+                     placeholder='E-mail'
+                     onChangeText={texto => { this.props.modificarEmail(texto) }} />
+                    <TextInput
+                     value={this.props.senha}
+                     style={styles.textoLogin}
+                     placeholder='Senha'
+                     onChangeText={texto => { this.props.modificarSenha(texto) }} />
                     <TouchableHighlight 
                         underlayColor={'white'}
                         activeOpacity={0.5}
@@ -80,4 +88,9 @@ const mapStateToProps = (state) => ({
     senha: state.default.AutenticacaoReducer.senha,
 });
 
-export default connect(mapStateToProps)(TelaLogin);
+connect()
+
+export default connect(mapStateToProps, {
+    modificarEmail,
+    modificarSenha,
+})(TelaLogin);

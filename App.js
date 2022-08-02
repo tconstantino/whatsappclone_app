@@ -21,13 +21,12 @@ import store from './src/store';
 
  const App = () => {
    return (
-    <SafeAreaView style={{backgroundColor: '#115e54', flex: 1}}>
-      <StatusBar barStyle='light-content'></StatusBar>
-      <Provider store={store}>
+    <Provider store={store}>
+      <SafeAreaView style={{backgroundColor: '#115e54', flex: 1}}>
+        <StatusBar barStyle='light-content'></StatusBar>
         <Navigation></Navigation>
-      </Provider>
-    </SafeAreaView>
-     
+      </SafeAreaView>
+    </Provider>
    );
  };
  
