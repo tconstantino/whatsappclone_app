@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 import Botao from './botao';
 import { connect } from 'react-redux';
+import { modificarNome, modificarEmail, modificarSenha } from '../actions';
 
 class TelaCadastro extends Component {
     constructor(props) {
@@ -16,9 +17,21 @@ class TelaCadastro extends Component {
         return (
             <View style={styles.tela}>
                 <View style={styles.painelCampos}>
-                    <TextInput value={this.props.nome} style={styles.campos} placeholder="Nome"></TextInput>
-                    <TextInput value={this.props.email} style={styles.campos} placeholder="E-mail"></TextInput>
-                    <TextInput value={this.props.senha} style={styles.campos} placeholder="Senha"></TextInput>
+                    <TextInput
+                     value={this.props.nome}
+                     style={styles.campos}
+                     placeholder="Nome"
+                     onChangeText={texto => this.props.modificarNome(texto)} />
+                    <TextInput
+                     value={this.props.email}
+                     style={styles.campos}
+                     placeholder="E-mail"
+                     onChangeText={texto => this.props.modificarEmailCadastro(texto)} />
+                    <TextInput
+                     value={this.props.senha}
+                     style={styles.campos}
+                     placeholder="Senha"
+                     onChangeText={texto => this.props.modificarSenha(texto)} />
                 </View>
                 <View style={styles.painelBotao}>
                     <Botao title="Cadastrar" onPress={this.cadastrar.bind(this)}></Botao>
@@ -52,4 +65,8 @@ const mapStateToProps = (state) => ({
     senha: state.default.CadastroReducer.senha,
 });
 
-export default connect(mapStateToProps)(TelaCadastro);
+export default connect(mapStateToProps, {
+    modificarNome,
+    modificarEmailCadastro,
+    modificarSenha
+})(TelaCadastro);

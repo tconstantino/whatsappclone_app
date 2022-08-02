@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { modificarEmail, modificarSenha } from "../actions/autenticacao-action";
+import { modificarEmail, modificarSenha } from "../actions";
 
 const initialState = {
     email: '',

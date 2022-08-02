@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Botao from './botao';
 import { connect } from 'react-redux';
-import { modificarEmail, modificarSenha } from '../actions/autenticacao-action';
+import { modificarEmail, modificarSenha } from '../actions';
 
 class TelaLogin extends Component {
     constructor(props) {

@@ -1,4 +1,5 @@
-import { createReducer, createAction } from "@reduxjs/toolkit";
+import { createReducer } from "@reduxjs/toolkit";
+import { modificarNome, modificarEmail, modificarSenha } from "../actions";
 
 const initialState = {
     nome: '',
@@ -6,14 +7,17 @@ const initialState = {
     senha: '',
 };
 
-const cadastrar = createAction('cadastrar');
-
 const CadastroReducer = createReducer(initialState, (builder) => {
     builder
-        .addCase(cadastrar, (state, action) => {
-            return state;
+        .addCase(modificarNome, (state, action) => {
+            return { ...state, nome: action.payload };
         })
-        .addDefaultCase((state, action) => {})
+        .addCase(modificarEmail, (state, action) => {
+            return { ...state, email: action.payload };
+        })
+        .addCase(modificarSenha, (state, action) => {
+            return { ...state, senha: action.payload };
+        })
 });
 
 export default CadastroReducer;

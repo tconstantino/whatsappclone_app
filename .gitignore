@@ -59,4 +59,4 @@ buck-out/
 /ios/Pods/
 
 # Configs do firebase
-firebase-config.js
+config/firebase-config.js
