@@ -17,8 +17,8 @@ class TelaLogin extends Component {
         super(props);
     }
 
-    irParaCadastro(navigation) {
-        navigation.navigate('Cadastro');
+    irParaCadastro() {
+        this.props.navigation.navigate('Cadastro');
     }
 
     acessar() {
@@ -47,9 +47,9 @@ class TelaLogin extends Component {
                         secureTextEntry
                         onChangeText={texto => { this.props.modificarSenha(texto) }} />
                         <TouchableHighlight 
-                            underlayColor={'white'}
+                            underlayColor='transparent'
                             activeOpacity={0.5}
-                            onPress={() => this.irParaCadastro(this.props.navigation)}>
+                            onPress={this.irParaCadastro.bind(this)}>
                             <Text style={styles.textoLink}>Ainda não tem cadastro? Cadastre-se</Text>
                         </TouchableHighlight>
                     </View>
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     textoLink: {
+        marginTop: 25,
         fontSize: 20,
         color: '#fff',
     },
@@ -98,8 +99,6 @@ const mapStateToProps = (state) => ({
     email: state.default.AutenticacaoReducer.email,
     senha: state.default.AutenticacaoReducer.senha,
 });
-
-connect()
 
 export default connect(mapStateToProps, {
     modificarEmail,

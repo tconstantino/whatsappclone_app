@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet, ImageBackground } from "react-native";
+import { View, TextInput, StyleSheet, ImageBackground, Text } from "react-native";
 import Botao from './botao';
 import { connect } from 'react-redux';
-import { modificarNome, modificarEmail, modificarSenha } from '../actions';
+import { 
+    modificarNome,
+    modificarEmail,
+    modificarSenha,
+    cadastrarUsuario,
+} from '../actions';
 import backgroundImage from '../../images/background.png'
 
 class TelaCadastro extends Component {
@@ -11,7 +16,15 @@ class TelaCadastro extends Component {
     }
 
     cadastrar() {
-
+        const nome = this.props.nome;
+        const email = this.props.email;
+        const senha = this.props.senha;
+        this.props.cadastrarUsuario({ 
+            nome, 
+            email, 
+            senha, 
+            navigation: this.props.navigation 
+        });
     }
 
     render() {
@@ -38,6 +51,7 @@ class TelaCadastro extends Component {
                         placeholderTextColor='#fff'
                         secureTextEntry
                         onChangeText={texto => this.props.modificarSenha(texto)} />
+                        <Text style={styles.textoErro}>{this.props.mensagemErro}</Text>
                     </View>
                     <View style={styles.painelBotao}>
                         <Botao title="Cadastrar" onPress={this.cadastrar.bind(this)}></Botao>
@@ -65,16 +79,31 @@ const styles = StyleSheet.create({
     painelBotao: {
         flex: 1,
     },
+    textoSucesso: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'blue',
+        marginTop: 20,
+    },
+    textoErro: {
+        fontSize: 18,
+        color: '#ff0000',
+        marginTop: 20,
+    },
 });
 
 const mapStateToProps = (state) => ({
     nome: state.default.CadastroReducer.nome,
     email: state.default.CadastroReducer.email,
     senha: state.default.CadastroReducer.senha,
+    usuario: state.default.CadastroReducer.usuario,
+    mensagemErro: state.default.CadastroReducer.mensagemErro,
+    mensagemSucesso: state.default.CadastroReducer.mensagemSucesso,
 });
 
 export default connect(mapStateToProps, {
     modificarNome,
     modificarEmail,
-    modificarSenha
+    modificarSenha,
+    cadastrarUsuario,
 })(TelaCadastro);

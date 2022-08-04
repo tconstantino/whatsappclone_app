@@ -4,17 +4,17 @@ import { Button, Platform, View, StyleSheet } from "react-native";
 const Botao = (props) => {
     return Platform.OS === 'ios'
         ? <View style={styles.botaoIos}>
-            <Button color='#FFF' title={props.title} onPress={props.acao}></Button>
+            <Button color='#FFF' title={props.title} onPress={props.onPress}></Button>
         </View>
-        : <Button color='#115e54' title={props.title} onPress={props.acao}></Button>;
+        : <Button color='#115e54' title={props.title} onPress={props.onPress}></Button>;
 }
 
 const styles = StyleSheet.create({
     botaoIos: {
         backgroundColor: '#115e54',
-        shadowColor: 'grey',
+        shadowColor: 'black',
         shadowOpacity: 0.5,
-        shadowOffset: { width: 100, height: 100 },
+        shadowOffset: { width: 1, height: 2 },
     },
 });
 

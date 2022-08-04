@@ -31,7 +31,7 @@ const authentication = getAuth(app);
    return (
     <Provider store={store}>
       <SafeAreaView style={{backgroundColor: '#115e54', flex: 1}}>
-        <StatusBar barStyle='light-content'></StatusBar>
+        <StatusBar translucent={false} barStyle='light-content'></StatusBar>
         <Navigation></Navigation>
       </SafeAreaView>
     </Provider>
