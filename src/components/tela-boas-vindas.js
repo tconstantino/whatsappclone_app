@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, StyleSheet, Image, Text, ImageBackground } from "react-native";
 import Botao from './botao';
 import { connect } from 'react-redux';
-import { modificarSenha } from "../actions";
+import { modificarSenha, apagarMensagemErro } from "../actions";
 import logoImage from '../../images/logo.png';
 import backgroundImage from '../../images/background.png'
 
@@ -11,8 +11,9 @@ class TelaBoasVindas extends Component {
         super(props);
     }
 
-    fazerLogin() {
+    irParaLogin() {
         this.props.modificarSenha('');
+        this.props.apagarMensagemErro();
         this.props.navigation.navigate('Login');
     }
 
@@ -25,7 +26,7 @@ class TelaBoasVindas extends Component {
                         <Image source={logoImage} />
                     </View>
                     <View style={styles.painelBotao}>
-                        <Botao title='Fazer login' onPress={this.fazerLogin.bind(this)} />
+                        <Botao title='Fazer login' onPress={this.irParaLogin.bind(this)} />
                     </View>
                 </View>
             </ImageBackground>
@@ -60,4 +61,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
     modificarSenha,
+    apagarMensagemErro,
 })(TelaBoasVindas);

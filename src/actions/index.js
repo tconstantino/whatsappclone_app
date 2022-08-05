@@ -13,3 +13,12 @@ export const cadastrarUsuario = createAsyncThunk('cadastrar_usuario', async (par
     
     params.navigation.navigate('Boas-vindas');
 });
+
+export const autenticarUsuario = createAsyncThunk('autenticar_usuario', async (params) => {
+    const usuarioService = new UsuarioService();
+    await usuarioService.autenticarUsuario(params.email, params.senha);
+
+    params.navigation.navigate('Principal');
+});
+
+export const apagarMensagemErro = createAction('apagar_mensagem_erro');

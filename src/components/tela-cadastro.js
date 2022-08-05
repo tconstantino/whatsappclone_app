@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet, ImageBackground, Text } from "react-native";
+import { View, TextInput, StyleSheet, ImageBackground, Text, ActivityIndicator } from "react-native";
 import Botao from './botao';
 import { connect } from 'react-redux';
 import { 
@@ -54,7 +54,11 @@ class TelaCadastro extends Component {
                         <Text style={styles.textoErro}>{this.props.mensagemErro}</Text>
                     </View>
                     <View style={styles.painelBotao}>
-                        <Botao title="Cadastrar" onPress={this.cadastrar.bind(this)}></Botao>
+                        {
+                            this.props.exibirLoading 
+                                ? <ActivityIndicator size='large' />
+                                : <Botao title="Cadastrar" onPress={this.cadastrar.bind(this)}></Botao>
+                        }
                     </View>
                 </View>
             </ImageBackground>
@@ -97,6 +101,7 @@ const mapStateToProps = (state) => ({
     email: state.default.CadastroReducer.email,
     senha: state.default.CadastroReducer.senha,
     usuario: state.default.CadastroReducer.usuario,
+    exibirLoading: state.default.CadastroReducer.exibirLoading,
     mensagemErro: state.default.CadastroReducer.mensagemErro,
     mensagemSucesso: state.default.CadastroReducer.mensagemSucesso,
 });

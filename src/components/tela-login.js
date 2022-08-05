@@ -6,10 +6,11 @@ import {
     TextInput,
     TouchableHighlight,
     ImageBackground,
+    ActivityIndicator
 } from 'react-native';
 import Botao from './botao';
 import { connect } from 'react-redux';
-import { modificarEmail, modificarSenha } from '../actions';
+import { modificarEmail, modificarSenha, autenticarUsuario } from '../actions';
 import backgroundImage from '../../images/background.png'
 
 class TelaLogin extends Component {
@@ -22,7 +23,14 @@ class TelaLogin extends Component {
     }
 
     acessar() {
-        
+        const email = this.props.email;
+        const senha = this.props.senha;
+        const navigation = this.props.navigation;
+        this.props.autenticarUsuario({
+            email,
+            senha,
+            navigation,
+        });
     }
 
     render() {
@@ -52,9 +60,14 @@ class TelaLogin extends Component {
                             onPress={this.irParaCadastro.bind(this)}>
                             <Text style={styles.textoLink}>Ainda não tem cadastro? Cadastre-se</Text>
                         </TouchableHighlight>
+                        <Text style={styles.textoErro}>{this.props.mensagemErro}</Text>
                     </View>
                     <View style={styles.painelAcessar}>
-                        <Botao title='Acessar' onPress={this.acessar.bind(this)}></Botao>
+                        {
+                            this.props.exibirLoading 
+                                ? <ActivityIndicator style={{marginTop: 65}} size='large' />
+                                : <Botao title='Acessar' onPress={this.acessar.bind(this)}></Botao>
+                        }
                     </View>
                 </View>
             </ImageBackground>
@@ -93,14 +106,22 @@ const styles = StyleSheet.create({
     painelAcessar: {
         flex: 1,
     },
+    textoErro: {
+        fontSize: 18,
+        color: '#ff0000',
+        marginTop: 20,
+    },
 });
 
 const mapStateToProps = (state) => ({
     email: state.default.AutenticacaoReducer.email,
     senha: state.default.AutenticacaoReducer.senha,
+    mensagemErro: state.default.AutenticacaoReducer.mensagemErro,
+    exibirLoading: state.default.AutenticacaoReducer.exibirLoading,
 });
 
 export default connect(mapStateToProps, {
     modificarEmail,
     modificarSenha,
+    autenticarUsuario,
 })(TelaLogin);

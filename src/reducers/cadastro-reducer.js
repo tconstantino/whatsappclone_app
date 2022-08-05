@@ -11,6 +11,7 @@ const initialState = {
     email: '',
     senha: '',
     mensagemErro: '',
+    exibirLoading: false,
 };
 
 const CadastroReducer = createReducer(initialState, (builder) => {
@@ -29,6 +30,14 @@ const CadastroReducer = createReducer(initialState, (builder) => {
                 ...state, 
                 mensagemErro: '',
                 senha: '',
+                exibirLoading: false,
+            };
+        })
+        .addCase(cadastrarUsuario.pending, (state, action) => {
+            return { 
+                ...state, 
+                mensagemErro: '',
+                exibirLoading: true,
             };
         })
         .addCase(cadastrarUsuario.rejected, (state, action) => {
@@ -36,6 +45,7 @@ const CadastroReducer = createReducer(initialState, (builder) => {
             return { 
                 ...state,
                 mensagemErro: action.error.message,
+                exibirLoading: false,
             };
         })
 });
