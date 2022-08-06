@@ -1,39 +1,51 @@
-import React, { Component } from "react";
-import { View, StyleSheet, Image, Text, ImageBackground } from "react-native";
-import Botao from './botao';
-import { connect } from 'react-redux';
-import { modificarSenha, apagarMensagemErro } from "../actions";
-import logoImage from '../../images/logo.png';
-import backgroundImage from '../../images/background.png'
+import React from 'react';
+import { useWindowDimensions, StyleSheet } from 'react-native';
+import { TabView, SceneMap } from 'react-native-tab-view';
+import TabBarMenu from './tab-bar-menu';
+import TelaContatos from './tela-contatos';
+import TelaConversas from './tela-conversas';
 
-class TelaPrincipal extends Component {
-    constructor(props) {
-        super(props);
-    }
 
-    render() {
-        return (
-            <View style={styles.tela}>
-                <View style={styles.painelTitulo}>
-                    <Text style={styles.textoTitulo}>Tela principal da aplicação</Text>
-                </View>
-            </View>
-        )
-    }
+export default TelaPrincipal = (props) => {
+    const navigation = props.navigation;
+
+    const renderScene = SceneMap({
+        conversas: TelaConversas,
+        contatos: TelaContatos,
+    });
+    
+    const layout = useWindowDimensions();
+
+    const [index, setIndex] = React.useState(0);
+    const [routes] = React.useState([
+        { key: 'conversas', title: 'Conversas' },
+        { key: 'contatos', title: 'Contatos' },
+    ]);
+
+    const renderTabBar = (props) => {
+     return (
+        <TabBarMenu 
+            {...props}
+            navigation={navigation}
+            indicatorStyle={styles.indicadorTab} 
+            style={styles.tab}/>
+    )};
+    
+    return (
+        <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            renderTabBar={renderTabBar}
+            initialLayout={{ width: layout.width }} />
+    );
 }
 
 const styles = StyleSheet.create({
-    tela: {
-        flex: 1,
+    tab: {
+        backgroundColor: '#115e54',
     },
-    painelTitulo: {
-        alignItems: 'center',
-    },
-    textoTitulo: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        marginTop: 20,
+    indicadorTab: {
+        backgroundColor: '#fff',
     }
-});
-
-export default connect()(TelaPrincipal);
+})

@@ -30,8 +30,8 @@ const authentication = getAuth(app);
  const App = () => {
    return (
     <Provider store={store}>
-      <SafeAreaView style={{backgroundColor: '#115e54', flex: 1}}>
-        <StatusBar translucent={false} barStyle='light-content'></StatusBar>
+      <SafeAreaView style={{backgroundColor: '#114d44', flex: 1}}>
+        <StatusBar translucent={false} barStyle='light-content' backgroundColor='#114d44'></StatusBar>
         <Navigation></Navigation>
       </SafeAreaView>
     </Provider>

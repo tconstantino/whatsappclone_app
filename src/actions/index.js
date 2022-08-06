@@ -1,5 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import UsuarioService from "../services/usuario-service";
+import ContatoService from "../services/contato-service";
 
 export const modificarNome = createAction('modificar_nome');
 
@@ -22,3 +23,8 @@ export const autenticarUsuario = createAsyncThunk('autenticar_usuario', async (p
 });
 
 export const apagarMensagemErro = createAction('apagar_mensagem_erro');
+
+export const adicionarContato = createAsyncThunk('adicionar_contato', async (params) => {
+    const contatoService = new ContatoService();
+    await contatoService.adicionarContato(params.email);
+});

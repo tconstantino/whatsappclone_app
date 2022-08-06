@@ -56,7 +56,6 @@ class TelaLogin extends Component {
                         onChangeText={texto => { this.props.modificarSenha(texto) }} />
                         <TouchableHighlight 
                             underlayColor='transparent'
-                            activeOpacity={0.5}
                             onPress={this.irParaCadastro.bind(this)}>
                             <Text style={styles.textoLink}>Ainda não tem cadastro? Cadastre-se</Text>
                         </TouchableHighlight>
