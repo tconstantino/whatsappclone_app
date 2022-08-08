@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet, ImageBackground, Text, ActivityIndicator } from "react-native";
+import { View, StyleSheet, ImageBackground, Text, TextInput, ActivityIndicator } from "react-native";
 import Botao from './botao';
+import TextInputSenha from './text-input-senha';
 import { connect } from 'react-redux';
 import { 
     modificarNome,
     modificarEmail,
     modificarSenha,
+    modificarConfirmacaoSenha,
     cadastrarUsuario,
 } from '../actions';
 import backgroundImage from '../../images/background.png'
@@ -19,10 +21,12 @@ class TelaCadastro extends Component {
         const nome = this.props.nome;
         const email = this.props.email;
         const senha = this.props.senha;
+        const confirmacaoSenha = this.props.confirmacaoSenha;
         this.props.cadastrarUsuario({ 
             nome, 
             email, 
-            senha, 
+            senha,
+            confirmacaoSenha,
             navigation: this.props.navigation 
         });
     }
@@ -44,13 +48,16 @@ class TelaCadastro extends Component {
                         placeholder="E-mail"
                         placeholderTextColor='#fff'
                         onChangeText={texto => this.props.modificarEmail(texto)} />
-                        <TextInput
+                        <TextInputSenha
                         value={this.props.senha}
-                        style={styles.campos}
                         placeholder="Senha"
                         placeholderTextColor='#fff'
-                        secureTextEntry
                         onChangeText={texto => this.props.modificarSenha(texto)} />
+                        <TextInputSenha
+                        value={this.props.confirmacaoSenha}
+                        placeholder="Confirmação senha"
+                        placeholderTextColor='#fff'
+                        onChangeText={texto => this.props.modificarConfirmacaoSenha(texto)} />
                         <Text style={styles.textoErro}>{this.props.mensagemErro}</Text>
                     </View>
                     <View style={styles.painelBotao}>
@@ -100,6 +107,7 @@ const mapStateToProps = (state) => ({
     nome: state.default.CadastroReducer.nome,
     email: state.default.CadastroReducer.email,
     senha: state.default.CadastroReducer.senha,
+    confirmacaoSenha: state.default.CadastroReducer.confirmacaoSenha,
     usuario: state.default.CadastroReducer.usuario,
     exibirLoading: state.default.CadastroReducer.exibirLoading,
     mensagemErro: state.default.CadastroReducer.mensagemErro,
@@ -110,5 +118,6 @@ export default connect(mapStateToProps, {
     modificarNome,
     modificarEmail,
     modificarSenha,
+    modificarConfirmacaoSenha,
     cadastrarUsuario,
 })(TelaCadastro);

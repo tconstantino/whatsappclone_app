@@ -1,21 +1,38 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { 
-    modificarEmail,
+    modificarEmailContato,
     adicionarContato,
 } from "../actions";
 
 const initialState = {
     email: '',
+    erroCadastro: '',
     exibirLoading: false,
 };
 
 const ContatoReducer = createReducer(initialState, (builder) => {
     builder
-        .addCase(modificarEmail, (state, action) => {
+        .addCase(modificarEmailContato, (state, action) => {
             return { ...state, email: action.payload };
         })
-        .addCase(adicionarContato, (state, action) => {
-            return { ...state };
+        .addCase(adicionarContato.fulfilled, (state, action) => {
+            return { ...state,
+                erroCadastro: '',
+                exibirLoading: false,
+            };
+        })
+        .addCase(adicionarContato.pending, (state, action) => {
+            return { ...state,
+                    erroCadastro: '',
+                    exibirLoading: true,
+            };
+        })
+        .addCase(adicionarContato.rejected, (state, action) => {
+            return { 
+                ...state, 
+                erroCadastro: action.error.message,
+                exibirLoading: false,
+            };
         })
 })
 

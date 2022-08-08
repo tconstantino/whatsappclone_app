@@ -6,9 +6,10 @@ import {
     TextInput,
     TouchableHighlight,
     ImageBackground,
-    ActivityIndicator
+    ActivityIndicator,
 } from 'react-native';
 import Botao from './botao';
+import TextInputSenha from './text-input-senha';
 import { connect } from 'react-redux';
 import { modificarEmail, modificarSenha, autenticarUsuario } from '../actions';
 import backgroundImage from '../../images/background.png'
@@ -47,18 +48,18 @@ class TelaLogin extends Component {
                         placeholder='E-mail'
                         placeholderTextColor='#fff'
                         onChangeText={texto => { this.props.modificarEmail(texto) }} />
-                        <TextInput
+                        <TextInputSenha
                         value={this.props.senha}
-                        style={styles.textoLogin}
                         placeholder='Senha'
                         placeholderTextColor='#fff'
-                        secureTextEntry
                         onChangeText={texto => { this.props.modificarSenha(texto) }} />
                         <TouchableHighlight 
                             underlayColor='transparent'
                             onPress={this.irParaCadastro.bind(this)}>
                             <Text style={styles.textoLink}>Ainda não tem cadastro? Cadastre-se</Text>
                         </TouchableHighlight>
+
+                        
                         <Text style={styles.textoErro}>{this.props.mensagemErro}</Text>
                     </View>
                     <View style={styles.painelAcessar}>
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
     },
     textoLogin: {
         fontSize: 20,
+        backgroundColor: 'transparent',
         height: 45,
         color: '#fff',
     },

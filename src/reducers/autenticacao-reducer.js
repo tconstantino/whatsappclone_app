@@ -1,5 +1,10 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { modificarEmail, modificarSenha, autenticarUsuario, apagarMensagemErro } from "../actions";
+import { 
+    modificarEmail,
+    modificarSenha,
+    autenticarUsuario,
+    apagarMensagemErro,
+} from "../actions";
 
 const initialState = {
     email: '',

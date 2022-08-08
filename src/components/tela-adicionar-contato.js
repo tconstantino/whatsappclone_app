@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { View, StyleSheet, TextInput, ActivityIndicator } from "react-native";
+import { View, StyleSheet, TextInput, ActivityIndicator, Text } from "react-native";
 import Botao from "./botao";
 import { connect } from 'react-redux';
-import { modificarEmail, adicionarContato } from "../actions";
+import { modificarEmailContato, adicionarContato } from "../actions";
 
 class TelaAdicionarContatos extends Component {
     constructor(props) {
@@ -10,7 +10,8 @@ class TelaAdicionarContatos extends Component {
     }
 
     adicionar() {
-
+        const email = this.props.email;
+        this.props.adicionarContato({ email });
     }
 
     render() {
@@ -22,7 +23,8 @@ class TelaAdicionarContatos extends Component {
                         style={styles.campoEmail}
                         placeholder='E-mail'
                         placeholderTextColor='#000'
-                        onChangeText={texto => { this.props.modificarEmail(texto) }} />
+                        onChangeText={texto => { this.props.modificarEmailContato(texto) }} />
+                        <Text style={styles.textoErro}>{this.props.erroCadastro}</Text>
                 </View>
                 <View style={styles.painelAdicionar}>
                 {
@@ -53,14 +55,20 @@ const styles = StyleSheet.create({
     painelAdicionar: {
         flex: 1,
     },
+    textoErro: {
+        fontSize: 18,
+        color: '#ff0000',
+        marginTop: 20,
+    },
 });
 
 const mapStateToProps = (state) => ({
     email: state.default.ContatoReducer.email,
+    erroCadastro: state.default.ContatoReducer.erroCadastro,
     exibirLoading: state.default.ContatoReducer.exibirLoading,
 });
 
 export default connect(mapStateToProps, { 
-    modificarEmail,
+    modificarEmailContato,
     adicionarContato,
 })(TelaAdicionarContatos);

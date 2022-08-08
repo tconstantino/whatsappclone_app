@@ -3,6 +3,7 @@ import {
     modificarNome, 
     modificarEmail, 
     modificarSenha,
+    modificarConfirmacaoSenha,
     cadastrarUsuario,
 } from "../actions";
 
@@ -10,6 +11,7 @@ const initialState = {
     nome: '',
     email: '',
     senha: '',
+    confirmacaoSenha: '',
     mensagemErro: '',
     exibirLoading: false,
 };
@@ -24,6 +26,9 @@ const CadastroReducer = createReducer(initialState, (builder) => {
         })
         .addCase(modificarSenha, (state, action) => {
             return { ...state, senha: action.payload };
+        })
+        .addCase(modificarConfirmacaoSenha, (state, action) => {
+            return { ...state, confirmacaoSenha: action.payload };
         })
         .addCase(cadastrarUsuario.fulfilled, (state, action) => {
             return { 
