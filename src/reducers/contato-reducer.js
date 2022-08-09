@@ -2,12 +2,14 @@ import { createReducer } from "@reduxjs/toolkit";
 import { 
     modificarEmailContato,
     adicionarContato,
+    adicionarMaisContatos,
 } from "../actions";
 
 const initialState = {
     email: '',
     erroCadastro: '',
     exibirLoading: false,
+    exibirSucessoAdicaoContato: false,
 };
 
 const ContatoReducer = createReducer(initialState, (builder) => {
@@ -17,8 +19,10 @@ const ContatoReducer = createReducer(initialState, (builder) => {
         })
         .addCase(adicionarContato.fulfilled, (state, action) => {
             return { ...state,
+                email: '',
                 erroCadastro: '',
                 exibirLoading: false,
+                exibirSucessoAdicaoContato: true,
             };
         })
         .addCase(adicionarContato.pending, (state, action) => {
@@ -33,6 +37,9 @@ const ContatoReducer = createReducer(initialState, (builder) => {
                 erroCadastro: action.error.message,
                 exibirLoading: false,
             };
+        })
+        .addCase(adicionarMaisContatos, (state, action) => {
+            return { ...state, exibirSucessoAdicaoContato: false };
         })
 })
 

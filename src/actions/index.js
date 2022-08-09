@@ -32,3 +32,5 @@ export const adicionarContato = createAsyncThunk('adicionar_contato', async (par
     const contatoService = new ContatoService();
     await contatoService.adicionarContato(params.email);
 });
+
+export const adicionarMaisContatos = createAction('adicionar_mais_contatos');

@@ -1,5 +1,5 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { getDatabase, ref, set, push } from 'firebase/database';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { getDatabase, ref, set, } from 'firebase/database';
 import EmailService from './email-service';
 import base64 from 'base-64';
 
@@ -44,6 +44,11 @@ class UsuarioService {
         catch(error) {
             throw error;
         }
+    }
+
+    async deslogarUsuario() {
+        const auth = getAuth();
+        signOut(auth);
     }
 }
 

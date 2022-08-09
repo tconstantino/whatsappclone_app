@@ -35,6 +35,7 @@ const CadastroReducer = createReducer(initialState, (builder) => {
                 ...state, 
                 mensagemErro: '',
                 senha: '',
+                confirmacaoSenha: '',
                 exibirLoading: false,
             };
         })

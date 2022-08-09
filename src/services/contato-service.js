@@ -1,7 +1,9 @@
-import { getDatabase, ref, set, push, get,  } from 'firebase/database';
+import { getDatabase, ref, set, get, onValue,  } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import EmailService from './email-service';
 import base64 from 'base-64';
+
+const REF_CONTATOS_USUARIO = 'contatos_usuario';
 
 class ContatoService {
 
@@ -21,10 +23,14 @@ class ContatoService {
             const usuariosDB = ref(database, `usuarios/${emailContatoBase64}`);
             const usuarioContato = await get(usuariosDB);
             if(!usuarioContato.exists()) throw new Error('E-mail não corresponde a um usuário válido');
-           
+            
+            
             const emailUsuarioLogadoBase64 = base64.encode(usuarioLogado.email.toLowerCase());
-            const contatosUsuarioDB = ref(database, `contatos_usuario/${emailUsuarioLogadoBase64}/${emailContatoBase64}`);
-            const contatoSalvo = await set(contatosUsuarioDB, {
+            const contatoNovoUsuarioDB = ref(database, `${REF_CONTATOS_USUARIO}/${emailUsuarioLogadoBase64}/${emailContatoBase64}`);
+            const contatoNovo = await get(contatoNovoUsuarioDB);
+            if(contatoNovo.exists()) throw new Error('Contato já existe na sua lista');
+
+            const contatoSalvo = await set(contatoNovoUsuarioDB, {
                 ...usuarioContato.val(),
             });
             
@@ -33,6 +39,19 @@ class ContatoService {
         catch(error) {
             throw error
         }
+    }
+
+    async escutarListaContatos(callback) {
+        const auth = getAuth();
+        const usuarioLogado = auth.currentUser;
+        const emailUsuarioLogado = usuarioLogado.email.toLowerCase();
+        const emailUsuarioLogadoBase64 = base64.encode(emailUsuarioLogado);
+        const database = getDatabase();
+        const contatosUsuarioDB = ref(database, `${REF_CONTATOS_USUARIO}/${emailUsuarioLogadoBase64}`);
+
+        onValue(contatosUsuarioDB, (contato) => {
+            callback(contato.val());
+        });
     }
 }
 
