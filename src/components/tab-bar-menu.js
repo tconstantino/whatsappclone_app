@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { TabBar } from 'react-native-tab-view';
 import adicionarContatoImage from '../../images/adicionar_contato.png';
+import { connect } from 'react-redux';
+import { deslogarUsuario } from '../actions';
 
 class TabBarMenu extends Component {
     constructor(props) {
@@ -13,7 +15,8 @@ class TabBarMenu extends Component {
     }
 
     sair() {
-
+        this.props.deslogarUsuario();
+        this.props.navigation.navigate('Login');
     }
 
     render() {
@@ -77,4 +80,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TabBarMenu
+export default connect(null, { deslogarUsuario })(TabBarMenu);

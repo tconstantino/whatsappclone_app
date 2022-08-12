@@ -4,6 +4,7 @@ import {
     modificarSenha,
     autenticarUsuario,
     apagarMensagemErro,
+    deslogarUsuario,
 } from "../actions";
 
 const initialState = {
@@ -46,6 +47,9 @@ const AutenticacaoReducer = createReducer(initialState, (builder) => {
         })
         .addCase(apagarMensagemErro, (state, action) => {
             return { ...state, mensagemErro: '' };
+        })
+       .addCase(deslogarUsuario, (state, action) => {
+            return { ...initialState };
         })
 });
 

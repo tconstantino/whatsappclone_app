@@ -3,6 +3,7 @@ import {
     modificarEmailContato,
     adicionarContato,
     adicionarMaisContatos,
+    obterListaContatos,
 } from "../actions";
 
 const initialState = {
@@ -10,9 +11,10 @@ const initialState = {
     erroCadastro: '',
     exibirLoading: false,
     exibirSucessoAdicaoContato: false,
+    listaContatos: null,
 };
 
-const ContatoReducer = createReducer(initialState, (builder) => {
+const ContatoReducer = createReducer(initialState, (builder,) => {
     builder
         .addCase(modificarEmailContato, (state, action) => {
             return { ...state, email: action.payload };
@@ -41,6 +43,10 @@ const ContatoReducer = createReducer(initialState, (builder) => {
         .addCase(adicionarMaisContatos, (state, action) => {
             return { ...state, exibirSucessoAdicaoContato: false };
         })
+       .addCase(obterListaContatos.fulfilled, (state, action) => {
+        console.log('\n\Reducer\n', action, '\n\n')
+            return { ...state, listaContatos: action.payload.listaContatos };
+       })
 })
 
 export default ContatoReducer;

@@ -41,16 +41,27 @@ class ContatoService {
         }
     }
 
-    async escutarListaContatos(callback) {
+    escutarListaContatos(callback) {
         const auth = getAuth();
         const usuarioLogado = auth.currentUser;
         const emailUsuarioLogado = usuarioLogado.email.toLowerCase();
         const emailUsuarioLogadoBase64 = base64.encode(emailUsuarioLogado);
         const database = getDatabase();
         const contatosUsuarioDB = ref(database, `${REF_CONTATOS_USUARIO}/${emailUsuarioLogadoBase64}`);
-
-        onValue(contatosUsuarioDB, (contato) => {
-            callback(contato.val());
+        let listaContatos = null;
+        
+        onValue(contatosUsuarioDB, (contatos) => {
+            contatos = contatos.val();
+            console.log('\n\n\n\nCONTATO ATUALIZADO\n', contatos, '\n\n\n')
+            listaContatos = [];
+            for(atributo in contatos) {
+                listaContatos.push({
+                    key: atributo,
+                    ...contatos[atributo],
+                });
+            }
+            
+            callback({ listaContatos })
         });
     }
 }

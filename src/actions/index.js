@@ -1,7 +1,6 @@
-import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createListenerMiddleware } from "@reduxjs/toolkit";
 import UsuarioService from "../services/usuario-service";
 import ContatoService from "../services/contato-service";
-
 export const modificarNome = createAction('modificar_nome');
 
 export const modificarEmail = createAction('modificar_email');
@@ -34,3 +33,22 @@ export const adicionarContato = createAsyncThunk('adicionar_contato', async (par
 });
 
 export const adicionarMaisContatos = createAction('adicionar_mais_contatos');
+
+export const obterListaContatos = createAsyncThunk('obter_lista_contatos', (params, thunkAPI) => {
+    const contatoService = new ContatoService();
+    
+    return new Promise((resolve) => {
+        contatoService.escutarListaContatos((l) => {
+            console.log('\n\nAction\n', l, '\n\n')
+            return thunkAPI.dispatch({type: 'obter_lista_contatos/fulfilled', payload: l});
+        });
+    });
+    
+});
+
+export const deslogarUsuario = createAction('deslogar_usuario', () => {
+    const usuarioService = new UsuarioService();
+    usuarioService.deslogarUsuario();
+
+    return { payload: null };
+});

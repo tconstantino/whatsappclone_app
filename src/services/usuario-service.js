@@ -46,7 +46,7 @@ class UsuarioService {
         }
     }
 
-    async deslogarUsuario() {
+    deslogarUsuario() {
         const auth = getAuth();
         signOut(auth);
     }

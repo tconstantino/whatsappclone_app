@@ -3,14 +3,14 @@ import { useWindowDimensions, StyleSheet } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import TabBarMenu from './tab-bar-menu';
 import TelaContatos from './tela-contatos';
-import TelaConversas from './tela-conversas';
+import TelaListaConversas from './tela-lista-conversas';
 
 
 export default TelaPrincipal = (props) => {
     const navigation = props.navigation;
 
     const renderScene = SceneMap({
-        conversas: TelaConversas,
+        conversas: TelaListaConversas,
         contatos: TelaContatos,
     });
     
