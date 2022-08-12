@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight, Alert } from 'react-native';
 import { TabBar } from 'react-native-tab-view';
 import adicionarContatoImage from '../../images/adicionar_contato.png';
 import { connect } from 'react-redux';
@@ -15,6 +15,18 @@ class TabBarMenu extends Component {
     }
 
     sair() {
+        Alert.alert('Deseja realmente sair?', '',
+        [{
+            text: 'Sim',
+            onPress: this.confirmarSaida.bind(this),
+        },
+        {
+            text: 'Não',
+            style: 'destructive'
+        }]);
+    }
+
+    confirmarSaida() {
         this.props.deslogarUsuario();
         this.props.navigation.navigate('Login');
     }

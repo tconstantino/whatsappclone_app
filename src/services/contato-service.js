@@ -52,7 +52,6 @@ class ContatoService {
         
         onValue(contatosUsuarioDB, (contatos) => {
             contatos = contatos.val();
-            console.log('\n\n\n\nCONTATO ATUALIZADO\n', contatos, '\n\n\n')
             listaContatos = [];
             for(atributo in contatos) {
                 listaContatos.push({

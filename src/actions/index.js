@@ -37,13 +37,14 @@ export const adicionarMaisContatos = createAction('adicionar_mais_contatos');
 export const obterListaContatos = createAsyncThunk('obter_lista_contatos', (params, thunkAPI) => {
     const contatoService = new ContatoService();
     
-    return new Promise((resolve) => {
-        contatoService.escutarListaContatos((l) => {
-            console.log('\n\nAction\n', l, '\n\n')
-            return thunkAPI.dispatch({type: 'obter_lista_contatos/fulfilled', payload: l});
+    return new Promise(() => {
+        contatoService.escutarListaContatos((listaContatos) => {
+            return thunkAPI.dispatch({
+                type: 'obter_lista_contatos/fulfilled',
+                payload: listaContatos
+            });
         });
     });
-    
 });
 
 export const deslogarUsuario = createAction('deslogar_usuario', () => {

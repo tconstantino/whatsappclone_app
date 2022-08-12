@@ -44,7 +44,6 @@ const ContatoReducer = createReducer(initialState, (builder,) => {
             return { ...state, exibirSucessoAdicaoContato: false };
         })
        .addCase(obterListaContatos.fulfilled, (state, action) => {
-        console.log('\n\Reducer\n', action, '\n\n')
             return { ...state, listaContatos: action.payload.listaContatos };
        })
 })
