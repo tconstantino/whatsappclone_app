@@ -16,7 +16,7 @@ class ContatoService {
     
             const auth = getAuth();
             const usuarioLogado = auth.currentUser;
-            if(emailContato === usuarioLogado.email.toLowerCase()) throw new Error('Não é possível adicionar o próprio contato');
+            if(emailContato === usuarioLogado.email) throw new Error('Não é possível adicionar o próprio contato');
     
             const emailContatoBase64 = base64.encode(emailContato);
             const database = getDatabase();
@@ -25,7 +25,7 @@ class ContatoService {
             if(!usuarioContato.exists()) throw new Error('E-mail não corresponde a um usuário válido');
             
             
-            const emailUsuarioLogadoBase64 = base64.encode(usuarioLogado.email.toLowerCase());
+            const emailUsuarioLogadoBase64 = base64.encode(usuarioLogado.email);
             const contatoNovoUsuarioDB = ref(database, `${REF_CONTATOS_USUARIO}/${emailUsuarioLogadoBase64}/${emailContatoBase64}`);
             const contatoNovo = await get(contatoNovoUsuarioDB);
             if(contatoNovo.exists()) throw new Error('Contato já existe na sua lista');
@@ -44,8 +44,7 @@ class ContatoService {
     escutarListaContatos(callback) {
         const auth = getAuth();
         const usuarioLogado = auth.currentUser;
-        const emailUsuarioLogado = usuarioLogado.email.toLowerCase();
-        const emailUsuarioLogadoBase64 = base64.encode(emailUsuarioLogado);
+        const emailUsuarioLogadoBase64 = base64.encode(usuarioLogado.email);
         const database = getDatabase();
         const contatosUsuarioDB = ref(database, `${REF_CONTATOS_USUARIO}/${emailUsuarioLogadoBase64}`);
         let listaContatos = null;

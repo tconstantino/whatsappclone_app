@@ -2,32 +2,22 @@ import React, { Component } from "react";
 import { View, StyleSheet, FlatList, Text, TouchableHighlight, Button } from "react-native";
 import { connect } from 'react-redux';
 import { obterListaContatos } from "../actions";
-import ContatoService from "../services/contato-service";
 
 class TelaContatos extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            listaContatos: []
-        }
     }
 
     componentDidMount() {
         this.props.obterListaContatos();
-        // const contatoService = new ContatoService();
-        // contatoService.escutarListaContatos((listaContatos) => {
-        //     console.log('\nBusca\n', listaContatos)
-        //     this.setState({ ...listaContatos })
-        // })
     }
 
     render() {
         return (
             <View style={styles.tela}>
-                
-                <FlatList data={this.props.listaContatos} renderItem={({ item }) => (
+                <FlatList data={this.props.listaContatos} keyExtractor={(item, index) => index} renderItem={({ item }) => (
                     <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('TelaConversa')}
+                        onPress={() => this.props.navigation.navigate('Conversa', { ...item })}
                         underlayColor='#eee'
                         activeOpacity={0.6}>
                         <View style={styles.painelContato}>
@@ -65,5 +55,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { obterListaContatos })(TelaContatos);
-
-// export default TelaContatos;

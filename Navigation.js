@@ -5,6 +5,7 @@ import TelaLogin from './src/components/tela-login';
 import TelaCadastro from './src/components/tela-cadastro';
 import TelaBoasVindas from './src/components/tela-boas-vindas';
 import TelaPrincipal from './src/components/tela-principal';
+import TelaListaConversas from './src/components/tela-lista-conversas';
 import TelaContatos from './src/components/tela-contatos';
 import TelaAdicionarContatos from './src/components/tela-adicionar-contato';
 import TelaConversa from './src/components/tela-conversa'
@@ -19,8 +20,10 @@ const Navigation = (props) => {
             <StackNavigator.Screen options={headerOptions} name='Cadastro' component={TelaCadastro} />
             <StackNavigator.Screen name='Boas-vindas' component={TelaBoasVindas} />
             <StackNavigator.Screen name='Principal' component={TelaPrincipal} />
+            <StackNavigator.Screen name='ListaConversas' component={TelaListaConversas} />
+            <StackNavigator.Screen name='Contatos' component={TelaContatos} />
             <StackNavigator.Screen options={headerOptions} name='Adicionar Contato' component={TelaAdicionarContatos} />
-            <StackNavigator.Screen options={headerOptions} name='Conversa' component={TelaConversa} />
+            <StackNavigator.Screen options={{...headerOptions, title: '' }} name='Conversa' component={TelaConversa} />
         </StackNavigator.Navigator>
         </NavigationContainer>
     )

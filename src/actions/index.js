@@ -1,6 +1,8 @@
 import { createAction, createAsyncThunk, createListenerMiddleware } from "@reduxjs/toolkit";
 import UsuarioService from "../services/usuario-service";
 import ContatoService from "../services/contato-service";
+import ConversasService from "../services/conversas-service";
+
 export const modificarNome = createAction('modificar_nome');
 
 export const modificarEmail = createAction('modificar_email');
@@ -52,4 +54,34 @@ export const deslogarUsuario = createAction('deslogar_usuario', () => {
     usuarioService.deslogarUsuario();
 
     return { payload: null };
+});
+
+export const modificarMensagem = createAction('modificar_mensagem');
+
+export const enviarMensagem = createAsyncThunk('enviar_mensagem', async (params) => {
+    const conversasService = new ConversasService();
+
+    const { mensagem, email } = params;
+    await conversasService.enviarMensagem(mensagem, email);
+});
+
+export const obterListaConversas = createAsyncThunk('obter_lista_conversas', (params, thunkAPI) => {
+    const conversasService = new ConversasService();
+    
+    return new Promise(() => {
+        conversasService.escutarlistaDeConversas((listaConversas) => {
+            thunkAPI.dispatch({ type: 'obter_lista_conversas/fulfilled', payload: listaConversas });
+        });
+    });
+});
+
+export const obterConversa = createAsyncThunk('obter_conversa', (params, thunkAPI) => {
+    const conversasService = new ConversasService();
+    const { email } = params;
+
+    return new Promise(() => {
+        conversasService.escutarConversa(email, (conversa) => {
+            thunkAPI.dispatch({ type: 'obter_conversa/fulfilled', payload: conversa });
+        });
+    });
 });

@@ -1,5 +1,4 @@
-import { async } from "@firebase/util";
-import { configureStore, createListenerMiddleware, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import * as rootReducer from "../reducers";
 import thunk from "redux-thunk";
 

@@ -10,8 +10,8 @@ export default TelaPrincipal = (props) => {
     const navigation = props.navigation;
 
     const renderScene = SceneMap({
-        conversas: TelaListaConversas,
-        contatos: TelaContatos,
+        conversas: () => <TelaListaConversas navigation={navigation} />,
+        contatos: () => <TelaContatos navigation={navigation} />,
     });
     
     const layout = useWindowDimensions();

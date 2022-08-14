@@ -11,7 +11,7 @@ const initialState = {
     erroCadastro: '',
     exibirLoading: false,
     exibirSucessoAdicaoContato: false,
-    listaContatos: null,
+    listaContatos: [],
 };
 
 const ContatoReducer = createReducer(initialState, (builder,) => {
