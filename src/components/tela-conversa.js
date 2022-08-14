@@ -11,8 +11,10 @@ class TelaConversa extends Component {
     
     enviarMensagem() {
         const mensagem = this.props.mensagem;
-        const { email } = this.props.route.params;
-        this.props.enviarMensagem({ mensagem, email });
+        if(mensagem) {
+            const { email } = this.props.route.params;
+            this.props.enviarMensagem({ mensagem, email });
+        }
     }
 
     componentDidMount() {
@@ -27,16 +29,12 @@ class TelaConversa extends Component {
         return (
             <View style={styles.tela}>
                 <View style={styles.topo}>
-                    <FlatList data={this.props.conversa} keyExtractor={(item, index) => index} renderItem={({ item }) => (
-                        <View>
-                            <Text>{item.mensagem} - {item.tipo}</Text>
+                    <FlatList inverted contentContainerStyle={{ flexDirection: 'column-reverse' }} data={this.props.conversa} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
+                        <View style={item.tipo === 'ENVIADA' ? styles.painelMensagemEnviada : styles.painelMensagemRecebida}>
+                            <Text style={styles.textoConversa}>{item.mensagem}</Text>
                         </View>
                     )} />
                 </View>
-
-
-
-
                 <View style={styles.painelTextoMensagem}>
                     <TextInput
                      multiline
@@ -63,6 +61,24 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingBottom: 20,
     },
+    painelMensagemEnviada: {
+        padding: 10,
+        borderRadius: 50,
+        marginTop: 5,
+        marginBottom: 5,
+        marginLeft: '40%',
+        alignSelf: 'flex-end',
+
+        backgroundColor: '#dcf8c6',
+    },
+    painelMensagemRecebida: {
+        padding: 10,
+        borderRadius: 50,
+        marginTop: 5,
+        marginBottom: 5,
+        marginRight: '40%',
+        backgroundColor: '#bbb',
+    },
     painelTextoMensagem: {
         flexDirection: 'row',
         height: 70,
@@ -77,8 +93,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         borderRadius: 45,
         height: 70,
-        padding: 15,
+        padding: 18,
         marginRight: 10,
+    },
+    textoConversa: {
+        color: '#000',
+        fontSize: 18,
+        padding: 5,
     }
 });
 

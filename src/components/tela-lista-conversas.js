@@ -22,7 +22,7 @@ class TelaListaConversas extends Component {
     render() {
         return (
             <View style={styles.tela}>
-                <FlatList data={this.props.listaConversas} keyExtractor={(item, index) => index} renderItem={({ item }) => (
+                <FlatList data={this.props.listaConversas} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
                     <TouchableHighlight
                         onPress={() => this.props.navigation.navigate('Conversa', { ...item, nome: this.pegarNomeContato(item.email) })}
                         underlayColor='#eee'

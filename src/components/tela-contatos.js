@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, FlatList, Text, TouchableHighlight, Button } from "react-native";
+import { View, StyleSheet, FlatList, Text, TouchableHighlight } from "react-native";
 import { connect } from 'react-redux';
 import { obterListaContatos } from "../actions";
 
@@ -15,7 +15,7 @@ class TelaContatos extends Component {
     render() {
         return (
             <View style={styles.tela}>
-                <FlatList data={this.props.listaContatos} keyExtractor={(item, index) => index} renderItem={({ item }) => (
+                <FlatList data={this.props.listaContatos} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
                     <TouchableHighlight
                         onPress={() => this.props.navigation.navigate('Conversa', { ...item })}
                         underlayColor='#eee'
