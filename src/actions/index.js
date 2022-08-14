@@ -85,3 +85,10 @@ export const obterConversa = createAsyncThunk('obter_conversa', (params, thunkAP
         });
     });
 });
+
+export const zerarContadorNovasMensagens = createAsyncThunk('zerar_contador_novas_mensagens', async (params) => {
+    const conversasService = new ConversasService();
+    const { email } = params;
+
+    await conversasService.zerarContadorDeNovasMensagens(email);
+});

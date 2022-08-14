@@ -19,7 +19,7 @@ class TelaConversa extends Component {
 
     componentDidMount() {
         const { nome, email } = this.props.route.params;
-        const tituloTela = `${nome} <${email}>`;
+        const tituloTela = `${nome || ''} <${email}>`;
         this.props.navigation.setOptions({ title: tituloTela });
         
         this.props.obterConversa({ email });

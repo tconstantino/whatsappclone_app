@@ -34,11 +34,12 @@ class TelaContatos extends Component {
 const styles = StyleSheet.create({
     tela: {
         flex: 1,
+        padding: 5,
     },
     painelContato: {
         padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#115e54',
     },
     textoNome: {
         fontSize: 22,

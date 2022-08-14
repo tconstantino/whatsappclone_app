@@ -1,5 +1,5 @@
 import { getAuth } from 'firebase/auth'
-import { getDatabase, ref, get, push, onValue, query, set } from 'firebase/database';
+import { getDatabase, ref, get, push, onValue, update, set } from 'firebase/database';
 import base64 from 'base-64';
 import _ from 'lodash';
 
@@ -31,7 +31,8 @@ class ConversasService {
             await set(conversasUsuarioDB, {
                 email: emailContato,
                 dataHora: agora.toISOString(),
-                ultimaMensagemRecebida: '',
+                ultimaMensagem: mensagem,
+                tipoMensagem: TIPO_ENVIADA,
                 novasMensagens: 0,
             });
 
@@ -49,7 +50,8 @@ class ConversasService {
             await set(conversasContatoDB, {
                 email: usuarioLogado.email,
                 dataHora: agora.toISOString(),
-                ultimaMensagemRecebida: mensagem, 
+                ultimaMensagem: mensagem,
+                tipoMensagem: TIPO_RECEBIDA,
                 novasMensagens: quantidadeNovasMensagens
             });
         }
@@ -78,17 +80,23 @@ class ConversasService {
     escutarConversa(emailContato, callback) {
         const auth = getAuth();
         const usuarioLogado = auth.currentUser;
-
+        const emailUsuarioBase64 = base64.encode(usuarioLogado.email);
+        const emailContatoBase64 = base64.encode(emailContato);
         const database = getDatabase();
 
-        const referenciaConversa = `${base64.encode(usuarioLogado.email)}/${base64.encode(emailContato)}`;
-        const mensagensUsuarioDB = ref(database, `mensagens/${referenciaConversa}`);
+        const referenciaUsuarioEContato = `${emailUsuarioBase64}/${emailContatoBase64}`;
+        const mensagensUsuarioDB = ref(database, `mensagens/${referenciaUsuarioEContato}`);
 
         onValue(mensagensUsuarioDB, (conversa) => {
             conversa = conversa.val();
             conversa = _.map(conversa);
 
             callback({ conversa });
+
+            const conversasUsuarioDB = ref(database, `conversas/${referenciaUsuarioEContato}`);
+            update(conversasUsuarioDB, {
+                novasMensagens: 0,
+            });
         })
     }
 }
